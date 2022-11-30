@@ -1,5 +1,7 @@
 package com.example.retedemo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.retedemo.controller.dto.UserDto;
 import com.example.retedemo.entity.User;
 import com.example.retedemo.mapper.UserMapper;
 import com.example.retedemo.service.IUserService;
@@ -17,4 +19,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    @Override
+    public boolean login(UserDto userDto) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",userDto.getUsername());
+        queryWrapper.eq("password",userDto.getPassword());
+        try {
+            User one = getOne(queryWrapper);
+            return one != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

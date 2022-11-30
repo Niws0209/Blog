@@ -1,11 +1,13 @@
 package com.example.retedemo.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.retedemo.controller.dto.UserDto;
 import com.example.retedemo.entity.User;
 import com.example.retedemo.service.IUserService;
 import org.apache.logging.log4j.util.Strings;
@@ -33,17 +35,27 @@ public class UserController {
         private IUserService userService;
 
         @PostMapping("/api/addedit")
-        public Boolean save(@RequestBody User user){
+        public boolean save(@RequestBody User user){
             return userService.saveOrUpdate(user);
         }
 
+        @PostMapping("/api/login")
+        public boolean login(@RequestBody UserDto userDto) {
+            String username = userDto.getUsername();
+            String password = userDto.getPassword();
+            if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+                return false;
+            }
+            return userService.login(userDto);
+        }
+
         @GetMapping("/api/delete/{id}")
-        public Boolean delete(@PathVariable Integer id){
+        public boolean delete(@PathVariable Integer id){
             return userService.removeById(id);
         }
 
         @PostMapping("/api/delete/batch")
-        public Boolean deleteBatch(@RequestBody List<Integer> ids){
+        public boolean deleteBatch(@RequestBody List<Integer> ids){
                 return userService.removeByIds(ids);
         }
 
@@ -70,6 +82,7 @@ public class UserController {
             queryWrapper.orderByDesc("id");
             return userService.page(new Page<>(pageNum,pageSize),queryWrapper);
         }
+
 
         @GetMapping("/api/export")
         public void export(HttpServletResponse response) throws Exception{

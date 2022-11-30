@@ -1,5 +1,6 @@
 package com.example.retedemo.service;
 
+import com.example.retedemo.controller.dto.UserDto;
 import com.example.retedemo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
+    boolean login(UserDto userDto);
 }
