@@ -50,4 +50,7 @@ public class User implements Serializable {
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty("用户头像")
+    private String avatar;
 }

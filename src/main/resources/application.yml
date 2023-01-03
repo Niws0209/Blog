@@ -14,3 +14,7 @@ mybatis-plus:
     classpath: mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  upload:
+    path: E:\ideaProject\files\
