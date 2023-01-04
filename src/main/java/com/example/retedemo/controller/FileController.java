@@ -66,9 +66,6 @@ public class FileController {
                 //数据库不存在重复，则不删除刚上传的文件
                 url = "http://127.0.0.1:9000/file/" + fileUuid;
             }
-
-
-
         //存储数据库
         FileEntity saveFile = new FileEntity();
         saveFile.setName(originalFilename);
@@ -109,7 +106,7 @@ public class FileController {
         return filesList.size() == 0 ? null : filesList.get(0);
     }
 
-    @GetMapping("/detail/{id}")
+    @DeleteMapping("/detail/{id}")
     public Result getById(@PathVariable Integer id) {
         return Result.success(fileMapper.selectById(id));
     }
